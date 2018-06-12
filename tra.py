@@ -133,3 +133,5 @@ def main():
     plt.title('T(E)')
     #ax.savefig('Transmision.png')
     plt.show()
+
+main()
