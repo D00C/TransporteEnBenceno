@@ -1,14 +1,13 @@
 import matplotlib.pyplot as plt
 from math import *
 import numpy as np
-import csv
+#import csv
 
 def DIM2(E,B,a,b):
     #Constantes para simplificar la ecuación
     x = [(E-a[0])/B,(E-a[1])/B,(E-a[2])/B,(E-a[3])/B]
     N = [b[0]/B,b[1]/B,b[2]/B]
     z = x[1] - N[1]**2/x[2]
-
     #Formulas para la normalización
     #A1 = a1 + N1²B/z
     A1 = a[0] + B*N[0]**2/z
@@ -22,8 +21,8 @@ def dim2(E,A,B):
     #Constantes para simplificar la ecuación
     X = [E-A[0],E-A[1],E-A[2],E-A[3]]
     z = X[1]*X[2] - B[1]**2
-
-    A1 = A[0] + X[2]*B[1]**2/z
+    #
+    A1 = A[0] + X[2]*B[0]**2/z
     A4 = A[3] + X[1]*B[2]**2/z
     B14 = B[0]*B[1]*B[2]/z
     return A1,A4,B14
@@ -36,7 +35,6 @@ def Tra(E,A,B,An,Am,Bnm):
     P = zn + zm
     Q = zn*zm - G - G**2
     X = (E-A)/B
-
     #Formula para la transmisión
     #T = (1+2G)²(4-X²)/[(1-2Q)²(4-X²) + 4(P-QX)²]
     T = (1+2*G)**2*(4-X**2)
@@ -56,7 +54,7 @@ def Nor(E,B,An,Bn,n):
             Bn[-1].append(Bn[-2][4*i-1])
             #Se toman los dimeros n y n+1 y se normalizan a uno solo en el ultimo indice del arreglo
             #an,am,bnm = DIM2(E,B,An[-2][4*i:4*(i+1)+1],Bn[-2][4*i:4*(i+1)])
-            an,am,bnm = dim2(E,B,An[-2][4*i:4*(i+1)+1],Bn[-2][4*i:4*(i+1)])
+            an,am,bnm = dim2(E,An[-2][4*i:4*(i+1)+1],Bn[-2][4*i:4*(i+1)])
             An[-1].append(an)
             An[-1].append(am)
             Bn[-1].append(bnm)
@@ -117,21 +115,28 @@ def main():
     #Valores de la energía de sitio y los hoppings
     A = 0
     B = -0.5
-
+    X = (E-A)/B
+    #Para-benceno
+    Bp = 2*B/(X**2-1)
+    Ap = A + Bp*X
+    #Meta-benceno
+    Bm = B*(X**2-1)/(X*(X**2-2))
+    Am = A + B/X + Bm
     while True:
         fig, ax = plt.subplots()
         #n = int(input('Número de moleculas: '))
         #An,Bn = Mol(Am,Bm,B,n)
+        #an,am,bnm = Nor(E,B,An,Bn,n)
         C = input('Dame la cadena de moleculas(p,m): ')
         An,Bn = MOL(E,A,B,C)
         an,am,bnm = Nor(E,B,An,Bn,len(C))
         #an,am,bnm = Nor(E,B,[Ap,Ap,Am,Am],[Bp,B,Bm],2)
         T = Tra(E,A,B,an,am,bnm)
-
         ###Gráfica
         ax.plot(E,T)
         ax.grid()
         plt.title(C)
+        #plt.title(str(n)+' moleculas')
         plt.xlabel('E')
         plt.ylabel('T')
         plt.show()
