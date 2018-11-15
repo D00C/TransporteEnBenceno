@@ -90,23 +90,23 @@ def MOL(E,a,b,Cad):
     #Meta-benceno
     Bm = b*(X**2-1)/(X*(X**2-2))
     Am = a + b/X + Bm
-    A = []
-    B = []
+    A = [[]]
+    B = [[]]
     for i in Cad:
         if i == 'p':
-            A.append(Ap)
-            A.append(Ap)
-            B.append(Bp)
-            B.append(b)
+            A[0].append(Ap)
+            A[0].append(Ap)
+            B[0].append(Bp)
+            B[0].append(b)
         elif i == 'm':
-            A.append(Am)
-            A.append(Am)
-            B.append(Bm)
-            B.append(b)
+            A[0].append(Am)
+            A[0].append(Am)
+            B[0].append(Bm)
+            B[0].append(b)
         else:
             print('Error, simbolo incorrecto: '+i)
             break
-    B.pop()
+    B[0].pop()
     return A,B
 
 def main():
@@ -127,7 +127,9 @@ def main():
         #n = int(input('Número de moleculas: '))
         #An,Bn = Mol(Am,Bm,B,n)
         #an,am,bnm = Nor(E,B,An,Bn,n)
-        C = input('Dame la cadena de moleculas(p,m): ')
+        C = input('Dame la cadena de moleculas(p,m o q para salir): ')
+        if C == 'q':
+            break
         An,Bn = MOL(E,A,B,C)
         an,am,bnm = Nor(E,B,An,Bn,len(C))
         #an,am,bnm = Nor(E,B,[Ap,Ap,Am,Am],[Bp,B,Bm],2)
@@ -140,9 +142,9 @@ def main():
         plt.xlabel('E')
         plt.ylabel('T')
         plt.show()
-        Ans = input("¿Parar el programa?(s/n): ")
-        if Ans == 's':
-            break
+        #Ans = input("¿Parar el programa?(s/n): ")
+        #if Ans == 's':
+            #break
 
 if __name__ == '__main__':
     main()
