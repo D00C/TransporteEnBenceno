@@ -122,8 +122,8 @@ def main():
     #Meta-benceno
     Bm = B*(X**2-1)/(X*(X**2-2))
     Am = A + B/X + Bm
+    fig, ax = plt.subplots()
     while True:
-        fig, ax = plt.subplots()
         #n = int(input('Número de moleculas: '))
         #An,Bn = Mol(Am,Bm,B,n)
         #an,am,bnm = Nor(E,B,An,Bn,n)
@@ -136,15 +136,16 @@ def main():
         T = Tra(E,A,B,an,am,bnm)
         ###Gráfica
         ax.plot(E,T)
-        ax.grid()
-        plt.title(C)
-        #plt.title(str(n)+' moleculas')
-        plt.xlabel('E')
-        plt.ylabel('T')
-        plt.show()
-        #Ans = input("¿Parar el programa?(s/n): ")
-        #if Ans == 's':
-            #break
+    ax.grid()
+    C = input('Nombre de la gráfica: ')
+    plt.title(C)
+    #plt.title(str(n)+' moleculas')
+    plt.xlabel('E')
+    plt.ylabel('T')
+    plt.show()
+    #Ans = input("¿Parar el programa?(s/n): ")
+    #if Ans == 's':
+        #break
 
 if __name__ == '__main__':
     main()
