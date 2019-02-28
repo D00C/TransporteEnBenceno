@@ -90,6 +90,10 @@ def MOL(E,a,b,Cad):
     #Meta-benceno
     Bm = b*(X**2-1)/(X*(X**2-2))
     Am = a + b/X + Bm
+    #Orto-benceno
+    Bo = b*(X**2)*(X**2-3)/((X**2 - 1)**2 - X**2)
+    Ao1 = a + X*(b + 1/(b*((X**2 - 1)**2 - X**2)))/(X**2 - 1)
+    Ao2 = a + b*X*(X**2 - 1)/((X**2 - 1)**2 - X**2)
     A = [[]]
     B = [[]]
     for i in Cad:
@@ -102,6 +106,11 @@ def MOL(E,a,b,Cad):
             A[0].append(Am)
             A[0].append(Am)
             B[0].append(Bm)
+            B[0].append(b)
+        elif i == 'o':
+            A[0].append(Ao1)
+            A[0].append(Ao2)
+            B[0].append(Bo)
             B[0].append(b)
         else:
             print('Error, simbolo incorrecto: '+i)
@@ -116,17 +125,8 @@ def main():
     A = 0
     B = -0.5
     X = (E-A)/B
-    #Para-benceno
-    Bp = 2*B/(X**2-1)
-    Ap = A + Bp*X
-    #Meta-benceno
-    Bm = B*(X**2-1)/(X*(X**2-2))
-    Am = A + B/X + Bm
     fig, ax = plt.subplots()
     while True:
-        #n = int(input('Número de moleculas: '))
-        #An,Bn = Mol(Am,Bm,B,n)
-        #an,am,bnm = Nor(E,B,An,Bn,n)
         C = input('Dame la cadena de moleculas(p,m o q para salir): ')
         if C == 'q':
             break
