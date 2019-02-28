@@ -39,7 +39,6 @@ def Tra(E,A,B,An,Am,Bnm):
 def Nor(E,B,An,Bn,n):
     while n > 1:
         #Se toman los primeros dos dimeros y se normalizan a uno solo en un nuevo indice del arreglo
-        #an,am,bnm = DIM2(E,B,An[-1][0:4],Bn[-1][0:3])
         an,am,bnm = dim2(E,An[-1][0:4],Bn[-1][0:3])
         An.append([an,am])
         Bn.append([bnm])
@@ -48,7 +47,6 @@ def Nor(E,B,An,Bn,n):
             #Se agrega el hopping de la unión
             Bn[-1].append(Bn[-2][4*i-1])
             #Se toman los dimeros n y n+1 y se normalizan a uno solo en el ultimo indice del arreglo
-            #an,am,bnm = DIM2(E,B,An[-2][4*i:4*(i+1)+1],Bn[-2][4*i:4*(i+1)])
             an,am,bnm = dim2(E,An[-2][4*i:4*(i+1)+1],Bn[-2][4*i:4*(i+1)])
             An[-1].append(an)
             An[-1].append(am)
@@ -77,7 +75,7 @@ def Mol(Amol,Bmol,B,n):
     Bn[0].append(Bmol)
     return An,Bn
 
-def MOL(E,a,b,Cad):
+def MOL(E,a,b,Cad,D=1):
     X = (E-a)/b
     #Para-benceno
     Bp = 2*b/(X**2-1)
@@ -96,17 +94,17 @@ def MOL(E,a,b,Cad):
             A[0].append(Ap)
             A[0].append(Ap)
             B[0].append(Bp)
-            B[0].append(b)
+            B[0].append(D*b)
         elif i == 'm':
             A[0].append(Am)
             A[0].append(Am)
             B[0].append(Bm)
-            B[0].append(b)
+            B[0].append(D*b)
         elif i == 'o':
             A[0].append(Ao1)
             A[0].append(Ao2)
             B[0].append(Bo)
-            B[0].append(b)
+            B[0].append(D*b)
         else:
             print('Error, simbolo incorrecto: '+i)
             break
