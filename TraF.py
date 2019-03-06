@@ -61,20 +61,6 @@ def Nor(E,B,An,Bn,n):
         n -= n//2
     return An[-1][-2],An[-1][-1],Bn[-1][-1]
 
-def Mol(Amol,Bmol,B,n):
-    #Se crea el arreglo con las 2n energías de sitio
-    An = [[]]
-    for i in range(2*n):
-        An[0].append(Amol)
-    # Se crea arreglo con las 2n-1 energías de enlace
-    Bn = [[]]
-    for i in range(n-1):
-        Bn[0].append(Bmol)
-        #Bn[0].append(B*k[i])
-        Bn[0].append(B)
-    Bn[0].append(Bmol)
-    return An,Bn
-
 def MOL(E,a,b,Cad,D=[1]):
     X = (E-a)/b
     #Para-benceno
