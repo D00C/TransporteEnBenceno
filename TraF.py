@@ -75,7 +75,7 @@ def Mol(Amol,Bmol,B,n):
     Bn[0].append(Bmol)
     return An,Bn
 
-def MOL(E,a,b,Cad,D=1):
+def MOL(E,a,b,Cad,D=[1]):
     X = (E-a)/b
     #Para-benceno
     Bp = 2*b/(X**2-1)
@@ -89,24 +89,25 @@ def MOL(E,a,b,Cad,D=1):
     Ao2 = a + b*X*(X**2 - 1)/((X**2 - 1)**2 - X**2)
     A = [[]]
     B = [[]]
-    for i in Cad:
-        if i == 'p':
+    for i in range(len(Cad)):
+        if Cad[i] == 'p':
             A[0].append(Ap)
             A[0].append(Ap)
             B[0].append(Bp)
-            B[0].append(D*b)
-        elif i == 'm':
+        elif Cad[i] == 'm':
             A[0].append(Am)
             A[0].append(Am)
             B[0].append(Bm)
-            B[0].append(D*b)
-        elif i == 'o':
+        elif Cad[i] == 'o':
             A[0].append(Ao1)
             A[0].append(Ao2)
             B[0].append(Bo)
-            B[0].append(D*b)
         else:
             print('Error, simbolo incorrecto: '+i)
             break
-    B[0].pop()
+        if len(D) < len(Cad)-1:
+            B[0].append(b)
+        else:
+            if i <= len(D):
+                B[0].append(D[i]*b)
     return A,B

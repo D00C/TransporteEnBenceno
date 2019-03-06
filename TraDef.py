@@ -2,7 +2,6 @@ import TraF
 import numpy as np
 import csv
 
-
 def main():
     #Intervalo de deformación y número de iteraciones
     D = np.linspace(-1,1,4)
@@ -20,9 +19,17 @@ def main():
     #m es configuracion meta
     #o es configuracion ortho
     C = "pppp"
+    d = []
+    for i in range(len(C)):
+        if i < len(C)/2:
+            d.append(1-(i/len(C)))
+        else:
+            d.append(i/len(C))
     for i in range(len(D)):
+        for j in range(len(d)):
+            d[j] = d[j]*D[i]
         #Se crea los arreglos de energias de sitio y de enlace
-        An,Bn = TraF.MOL(E,A,B,C,D[i])
+        An,Bn = TraF.MOL(E,A,B,C,d)
         #Se renormaliza la molecula
         an,am,bnm = TraF.Nor(E,B,An,Bn,len(C))
         #Se calcula la transmicion
