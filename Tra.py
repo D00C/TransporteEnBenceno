@@ -1,6 +1,8 @@
+#!/bin/python
 import TraF
 import numpy as np
 import csv
+import matplotlib.pyplot as plt
 
 
 def main():
@@ -20,8 +22,11 @@ def main():
         An,Bn = TraF.MOL(E,A,B,C)
         an,am,bnm = TraF.Nor(E,B,An,Bn,len(C))
         T = TraF.Tra(E,A,B,an,am,bnm)
-        for i in range(len(T)):
-            escritor.writerow([str(E[i]),str(T[i])])
+        #for i in range(len(T)):
+            #escritor.writerow([str(E[i]),str(T[i])])
+    fig, ax = plt.subplots()
+    ax.plot(E,T)
+    plt.show()
 
 if __name__ == '__main__':
     main()

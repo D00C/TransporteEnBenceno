@@ -1,17 +1,3 @@
-def DIM2(E,B,a,b):
-    #Constantes para simplificar la ecuación
-    x = [(E-a[0])/B,(E-a[1])/B,(E-a[2])/B,(E-a[3])/B]
-    N = [b[0]/B,b[1]/B,b[2]/B]
-    z = x[1] - N[1]**2/x[2]
-    #Formulas para la normalización
-    #A1 = a1 + N1²B/z
-    A1 = a[0] + B*N[0]**2/z
-    #A4 = a4 + N3²B/x3 + (N2N3/X3)²B/z
-    A4 = a[3] + B*N[2]**2/x[2] + (N[1]*N[2]/x[2])**2*B/z
-    #B14 = N1N2N3B/(X3z)
-    B14 = B*N[0]*N[1]*N[2]/(x[2]*z)
-    return A1,A4,B14
-
 def dim2(E,A,B):
     #Constantes para simplificar la ecuación
     X = [E-A[0],E-A[1],E-A[2],E-A[3]]
@@ -61,7 +47,7 @@ def Nor(E,B,An,Bn,n):
         n -= n//2
     return An[-1][-2],An[-1][-1],Bn[-1][-1]
 
-def MOL(E,a,b,Cad,D=[1]):
+def MOL(E,a,b,Cad,D=None):
     X = (E-a)/b
     #Para-benceno
     Bp = 2*b/(X**2-1)
@@ -70,11 +56,15 @@ def MOL(E,a,b,Cad,D=[1]):
     Bm = b*(X**2-1)/(X*(X**2-2))
     Am = a + b/X + Bm
     #Orto-benceno
-    Bo = b*(X**2)*(X**2-3)/((X**2 - 1)**2 - X**2)
-    Ao1 = a + X*(b + 1/(b*((X**2 - 1)**2 - X**2)))/(X**2 - 1)
-    Ao2 = a + b*X*(X**2 - 1)/((X**2 - 1)**2 - X**2)
+    Bo = b + b/(X**2*(X**2 - 2))
+    Ao1 = a + b*(X**2 - 1)/(X*(X**2 - 2))
+    Ao2 = a + b*(X**6 - 2*X**4 + X**2 - 1)/(X**3*(X**2 - 1)*(X**2 - 2))
     A = [[]]
     B = [[]]
+    if D == None:
+        D = []
+        for i in range(len(Cad) - 1):
+            D.append(1)
     for i in range(len(Cad)):
         if Cad[i] == 'p':
             A[0].append(Ap)
@@ -91,9 +81,6 @@ def MOL(E,a,b,Cad,D=[1]):
         else:
             print('Error, simbolo incorrecto: '+i)
             break
-        if len(D) < len(Cad)-1:
-            B[0].append(b)
-        else:
-            if i <= len(D):
-                B[0].append(D[i]*b)
+        if i < len(Cad)-1:
+            B[0].append(D[i]*b)
     return A,B
